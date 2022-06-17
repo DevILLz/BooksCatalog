@@ -1,5 +1,6 @@
 ﻿using Domain;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
 
@@ -39,6 +40,11 @@ namespace BooksCatalog.Models
                 data = ms.ToArray();
             }
             return data;
+        }
+        public static byte[] ToBytes(Bitmap image)
+        {
+            ImageConverter converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(image, typeof(byte[]));
         }
     }
 }

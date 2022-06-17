@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace BooksCatalog.Models
 {
@@ -50,7 +51,6 @@ namespace BooksCatalog.Models
 
         private void Seed()
         {
-            //var a = new BitmapImage(new Uri("image.png"));
             var r = new Random();
             var date = DateTime.Parse("1/1/1999");
             var books = new Book[10];
@@ -62,8 +62,8 @@ namespace BooksCatalog.Models
                     Created = date.AddDays(r.Next(1, (i + 1) * 500)),
                     ISBN = long.Parse($"{r.Next(500_000_000, 999_999_999)}{r.Next(100, 999)}"),
                     Description = "Unknown",
-                    Cover = null
-                };
+                    Cover = Data.ToBytes(Properties.Resources.book_placeholder)
+        };
 
             context.Books.AddRange(books);
             context.SaveChanges();
