@@ -1,0 +1,33 @@
+﻿<Window x:Class="BooksCatalog.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BooksCatalog"
+        xmlns:views="clr-namespace:BooksCatalog.Views"
+        mc:Ignorable="d"
+        Background="#454545"
+        Title="Books Catatlog" Height="750" Width="600"
+        >
+    <Window.Resources>
+        <ResourceDictionary Source="../Resources.xaml"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="300"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <!--<RowDefinition Height="25"/>-->
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <UserControl Grid.Row="1" Grid.Column="0">
+            <views:BooksListView/>
+        </UserControl>
+
+        <UserControl Grid.Row="1" Grid.Column="1" Content="{Binding ExtraView}" Margin="5">
+            
+        </UserControl>
+    </Grid>
+</Window>
