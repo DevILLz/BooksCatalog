@@ -3,6 +3,7 @@ using Domain;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Windows.Input;
 
 namespace BooksCatalog.ViewModels
@@ -13,6 +14,7 @@ namespace BooksCatalog.ViewModels
         private ObservableCollection<BookDTO> _booksList;
         private BookDTO _selectedBook;
         private readonly IBooksRepository repos;
+        private SynchronizationContext context;
 
         #endregion
         #region Props
@@ -35,8 +37,9 @@ namespace BooksCatalog.ViewModels
             repos = new BooksRepository();
             BooksList = new ObservableCollection<BookDTO>(GetBookDTOList(repos.GetList().Result));
             Data.OnAddOrEditedBook += OnAddOrEditedBook;
+            context = SynchronizationContext.Current;
             #region Commands
-            AddCommand = new Command((o) => Data.RequestChangeView("add"));
+            AddCommand = new Command(async (o) => await Data.RequestChangeView("add"));
             DeleteCommand = new Command(Delete);
             #endregion
         }
@@ -51,7 +54,7 @@ namespace BooksCatalog.ViewModels
         {
             var localBook = BooksList.FirstOrDefault(b => b.Id == book.Id);
             if (localBook == null)
-                BooksList.Add(new BookDTO(book));
+                context.Post(o => BooksList.Add(o as BookDTO), new BookDTO(book));
             else
             {
                 localBook.Name = book.Name;

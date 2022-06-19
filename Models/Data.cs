@@ -1,6 +1,7 @@
 ﻿using Domain;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace BooksCatalog.Models
@@ -11,9 +12,9 @@ namespace BooksCatalog.Models
         public static event Action<Book> OnAddOrEditedBook;
         public static event Action<string> OnViewChangeRequest;
 
-        public static void ChangeSelectedBook(BookDTO book) => OnSelectedBookChanged?.Invoke(book);
-        public static void AddedOrEdited(Book book) => OnAddOrEditedBook?.Invoke(book);
-        public static void RequestChangeView(string request) => OnViewChangeRequest?.Invoke(request);
+        public static async Task ChangeSelectedBook(BookDTO book) => await Task.Factory.StartNew(() => OnSelectedBookChanged?.Invoke(book));
+        public static async Task AddedOrEdited(Book book) => await Task.Factory.StartNew(() => OnAddOrEditedBook?.Invoke(book));
+        public static async Task RequestChangeView(string request) => await Task.Factory.StartNew(() => OnViewChangeRequest?.Invoke(request));
 
         public static BitmapImage ToImage(byte[] array)
         {

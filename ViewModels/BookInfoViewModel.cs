@@ -1,4 +1,5 @@
 ﻿using BooksCatalog.Models;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BooksCatalog.ViewModels
@@ -20,6 +21,6 @@ namespace BooksCatalog.ViewModels
             EditCommand = new Command(Edit);
         }
 
-        private void Edit(object obj) => Data.RequestChangeView("edit");
+        private async void Edit(object obj) => await Data.RequestChangeView("edit");
     }
 }

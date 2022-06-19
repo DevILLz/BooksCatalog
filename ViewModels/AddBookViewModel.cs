@@ -2,6 +2,7 @@
 using Domain;
 using Microsoft.Win32;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -66,14 +67,14 @@ namespace BooksCatalog.ViewModels
                 book = await repos.EditBook(selectedBook.Id, book);
             else
                 book = await repos.AddBook(book);
-            Data.RequestChangeView("default");
-            Data.AddedOrEdited(book);
-            Data.ChangeSelectedBook(new BookDTO(book));
+            await Data.RequestChangeView("default");
+            await Data.AddedOrEdited(book);
+            await Data.ChangeSelectedBook(new BookDTO(book));
         }
-        private void Cancel(object obj) => Data.RequestChangeView("default");
+        private async void Cancel(object obj) => await Data.RequestChangeView("default");
         private void GetFile(object obj)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            var openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
             {
                 CoverImageFilePath = openFileDialog.FileName;
